@@ -1,0 +1,38 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/golang-migrate/migrate/v4
+gazelle(name = "gazelle")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "log.go",
+        "migrate.go",
+        "migration.go",
+        "util.go",
+    ],
+    importpath = "github.com/golang-migrate/migrate/v4",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//database:go_default_library",
+        "//internal/url:go_default_library",
+        "//source:go_default_library",
+        "@com_github_hashicorp_go_multierror//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "migrate_test.go",
+        "migration_test.go",
+        "util_test.go",
+    ],
+    embed = [":go_default_library"],
+    deps = [
+        "//database/stub:go_default_library",
+        "//source:go_default_library",
+        "//source/stub:go_default_library",
+    ],
+)

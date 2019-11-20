@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["vfs.go"],
+    importpath = "github.com/golang-migrate/migrate/v4/source/godoc_vfs",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//source:go_default_library",
+        "@org_golang_x_tools//godoc/vfs:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "vfs_example_test.go",
+        "vfs_test.go",
+    ],
+    embed = [":go_default_library"],
+    deps = [
+        "//:go_default_library",
+        "//source/testing:go_default_library",
+        "@org_golang_x_tools//godoc/vfs/mapfs:go_default_library",
+    ],
+)

@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["mongodb.go"],
+    importpath = "github.com/golang-migrate/migrate/v4/database/mongodb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//database:go_default_library",
+        "@org_mongodb_go_mongo_driver//bson:go_default_library",
+        "@org_mongodb_go_mongo_driver//mongo:go_default_library",
+        "@org_mongodb_go_mongo_driver//mongo/options:go_default_library",
+        "@org_mongodb_go_mongo_driver//x/mongo/driver/connstring:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["mongodb_test.go"],
+    embed = [":go_default_library"],
+    deps = [
+        "//:go_default_library",
+        "//database/testing:go_default_library",
+        "//dktesting:go_default_library",
+        "//source/file:go_default_library",
+        "@com_github_dhui_dktest//:go_default_library",
+        "@org_mongodb_go_mongo_driver//bson:go_default_library",
+        "@org_mongodb_go_mongo_driver//mongo:go_default_library",
+        "@org_mongodb_go_mongo_driver//mongo/options:go_default_library",
+    ],
+)

@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "docker.go",
+        "testing.go",
+    ],
+    importpath = "github.com/golang-migrate/migrate/v4/testing",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_docker_docker//api/types:go_default_library",
+        "@com_github_docker_docker//api/types/container:go_default_library",
+        "@com_github_docker_docker//api/types/network:go_default_library",
+        "@com_github_docker_docker//client:go_default_library",
+        "@com_github_hashicorp_go_multierror//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["testing_test.go"],
+    embed = [":go_default_library"],
+)

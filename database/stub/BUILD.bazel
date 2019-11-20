@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["stub.go"],
+    importpath = "github.com/golang-migrate/migrate/v4/database/stub",
+    visibility = ["//visibility:public"],
+    deps = ["//database:go_default_library"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["stub_test.go"],
+    embed = [":go_default_library"],
+    deps = [
+        "//:go_default_library",
+        "//database/testing:go_default_library",
+        "//source:go_default_library",
+        "//source/stub:go_default_library",
+    ],
+)

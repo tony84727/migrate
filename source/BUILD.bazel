@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "driver.go",
+        "migration.go",
+        "parse.go",
+    ],
+    importpath = "github.com/golang-migrate/migrate/v4/source",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "driver_test.go",
+        "migration_test.go",
+        "parse_test.go",
+    ],
+    embed = [":go_default_library"],
+)
